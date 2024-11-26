@@ -7,7 +7,6 @@ import { _prototype } from "./lib/_prototype.js"
 import NodeCache from 'node-cache'
 import readline from 'readline'
 import mongoose from "mongoose"
-import { parsePhoneNumber } from "libphonenumber-js"
 import baileys, { DisconnectReason, makeInMemoryStore, useMultiFileAuthState, fetchLatestBaileysVersion, makeCacheableSignalKeyStore, Browsers, getContentType, extractMessageContent, jidNormalizedUser, downloadMediaMessage } from "baileys";
 import { exec } from "child_process"
 import moment from 'moment-timezone'
@@ -85,7 +84,7 @@ const start = async() => {
 				console.log(chalk.bgRed(`[ ${Time} ] Error de desconexion desconocido: ${reason}||${connection}`))
 			}
 		} if (connection == "open") {
-			mongoose.connect(`mongodb+srv://alexito:alexito1638@serverdatadb.39fv13g.mongodb.net/nazi?retryWrites=true&w=majority&appName=ServerDataDB`)
+			mongoose.connect(`mongodb+srv://alexito:alexito1638@serverdatadb.39fv13g.mongodb.net/aiwbot?retryWrites=true&w=majority&appName=ServerDataDB`)
 				.then(() => { console.log('Base de datos conectada') })
 				.catch((e) => { console.error('Error al conectar con la base de datos: ', e) })
 			console.log(`Sistema en linea.`);
