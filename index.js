@@ -199,7 +199,7 @@ const start = async() => {
 			}
 
 			case "sotito": {
-				let { data: prmpt } = await axios.get("https://raw.githubusercontent.com/al-e-dev/prompt/refs/heads/main/aiwbot.txt")
+				let { data: prmpt } = await axios.get("https://raw.githubusercontent.com/al-e-dev/prompt/refs/heads/main/ai-wbot.txt")
                     
 				if (type === "audioMessage") return client.sendMessage(from, { text: "Aun no podemos escuchar tu voz, vuelve cuando recibas una actualizacion." })
 				if (type === "videoMessage" || type === "imageMessage" ) return client.sendMessage(from, { text: "Aun no podemos ver las imagenes vuelve cuando recibas una actualizacion." })
@@ -270,8 +270,8 @@ const start = async() => {
 			default: {
 			    // DEFAULT INTELIGENCE
 			    if (body && !from.endsWith("@g.us") && !v.key.fromMe) {
-                    let { data: prmpt } = await axios.get("https://raw.githubusercontent.com/al-e-dev/prompt/refs/heads/main/aiwbot.txt")
-					
+                    let { data: prmpt } = await axios.get("https://raw.githubusercontent.com/al-e-dev/prompt/refs/heads/main/ai-wbot.txt")
+
                     let hist = await TEMPORARY_CONVERSATION.findOne({ user: Number })
                 
                     if (hist && new Date() > hist.expiry) {
