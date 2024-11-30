@@ -16,7 +16,7 @@ import axios from 'axios'
 // import sharp from 'sharp';
 
 import { TEMPORARY_CONVERSATION } from "./models/temporary.js"
-import { tiktok } from "./lib/scrapper"
+import { tiktok } from "./lib/scrapper/index.js"
 
 const { proto } = baileys
 const msgRetryCounterCache = new NodeCache()
