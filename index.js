@@ -16,6 +16,7 @@ import axios from 'axios'
 // import sharp from 'sharp';
 
 import { TEMPORARY_CONVERSATION } from "./models/temporary.js"
+import { tiktok } from "./lib/scrapper"
 
 const { proto } = baileys
 const msgRetryCounterCache = new NodeCache()
@@ -141,36 +142,35 @@ const start = async() => {
 		switch (command) {
 			case "tag": {
 				if (!quoted) return
+				if (!isOwner) return
 				await client.sendMessage(from, { forward: quoted, contextInfo: { mentionedJid: metadata.participants.map((p) => p.id), remoteJid: from } })
 				break
 			}
 			case "contacts": {
-					const { contacts } = JSON.parse(fs.readFileSync('json/contacts.json', 'utf8'))
-			
-					if (!contacts?.length) {
-						return client.sendMessage(from, { text: "No se encontraron contactos en el archivo JSON." }, { quoted: ulink })
-					}
-			
-					if (!quoted) return
-
-					let count = 0
-					for (const contact of contacts) {
-						const numberi = `51${contact}@s.whatsapp.net`
-						try {
-							await client.sendMessage(numberi, { forward: quoted }, { quoted: ulink })
-						} catch (error) {
-							client.sendMessage(from, { text: `Error al enviar mensaje a ${numberi}`})
-							console.error(`Error al enviar mensaje a ${numberi}`)
-						}
-						await new Promise(resolve => setTimeout(resolve, 5000))
-						count++
-					}
-					client.sendMessage(from, { text: `enviado a ${count}`})
-			
+			    if (!isOwner) return
+			    const { contacts } = JSON.parse(fs.readFileSync('json/contacts.json', 'utf8'))
+			    if (!contacts?.length) {
+			        return client.sendMessage(from, { text: "No se encontraron contactos en el archivo JSON." }, { quoted: ulink })
+			    }
+			    if (!quoted) return
+			    let count = 0
+			    for (const contact of contacts) {
+			        const numberi = `51${contact}@s.whatsapp.net`
+			        try {
+			            await client.sendMessage(numberi, { forward: quoted }, { quoted: ulink })
+			        } catch (error) {
+			            client.sendMessage(from, { text: `Error al enviar mensaje a ${numberi}`})
+			            console.error(`Error al enviar mensaje a ${numberi}`)
+			        }
+			        await new Promise(resolve => setTimeout(resolve, 5000))
+			        count++
+			    }
+			    client.sendMessage(from, { text: `enviado a ${count}`})
 				break
 			}
 			
 			case "broadcast": {
+			    if (!isOwner) return
 				const groups = Object.entries(await client.groupFetchAllParticipating()).map(x => x[1])
 					.filter(x => !x.announce)
 					.filter(x => !x.isCommunityAnnounce)
@@ -265,6 +265,15 @@ const start = async() => {
 			
 				client.sendMessage(from, { text: `${response}`, mentions: client.parseMention(body) })
 				break
+			}
+			
+			case "tiktok":
+			case "tk":
+			case "tik": {
+			    if (!args.join(" ")) return
+			    
+			    
+			    break
 			}
 			default: {
 			    // DEFAULT INTELIGENCE
