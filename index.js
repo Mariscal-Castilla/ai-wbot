@@ -273,8 +273,6 @@ const start = async() => {
 			    if (!args.join(" ")) return
 			    
 			    const data = await tiktok.download(args.join(" "))
-			    console.log(data)
-			    
 			    client.sendMessage(from, { video: { url: data.media.nowatermark.hd.play }, mimetype: "video/mp4", caption: "🍥 fetch"})
 			    break
 			}
