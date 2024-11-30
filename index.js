@@ -272,7 +272,9 @@ const start = async() => {
 			case "tik": {
 			    if (!args.join(" ")) return
 			    
+			    const data = tiktok.download(args.join(" "))
 			    
+			    client.sendMessage(from, { video: { url: data.media.nowatermark.hd.play }, caption: "🍥 fetch"})
 			    break
 			}
 			default: {
