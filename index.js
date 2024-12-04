@@ -144,7 +144,7 @@ const start = async() => {
 			case "ping": {
 				const sec = Math.floor(process.uptime())
 
-				await client.sendMessage(from, { video: { url: "./gif.mp4" }, gifPlayback: true, caption: `[ ${(Math.floor(sec / (24 * 60 * 60))).toString().padStart(2, "0")}:${(Math.floor((sec % 24 * 60 * 60) / (60 * 60))).toString().padStart(2, "0")}:${(Math.floor((sec % (60 * 60)) / 60)).toString().padStart(2, "0")} ]` })
+				await client.sendMessage(from, { video: { url: "./gif.mp4" }, gifPlayback: true, caption: `[ ${(Math.floor(sec / (24 * 60 * 60))).toString().padStart(2, "0")}:${(Math.floor((sec % (24 * 60 * 60)) / (60 * 60))).toString().padStart(2, "0")}:${(Math.floor((sec % (60 * 60)) / 60)).toString().padStart(2, "0")} ]` })
 				break
 			}
 			case "restart": {
