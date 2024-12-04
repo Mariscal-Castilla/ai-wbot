@@ -137,6 +137,7 @@ const start = async() => {
             client.readMessages([v.key])
         }
 
+		if (from.endsWith("@newsletter")) return
 		
 		/** TODO */
 		switch (command) {
