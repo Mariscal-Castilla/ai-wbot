@@ -141,6 +141,10 @@ const start = async() => {
 
 		/** TODO */
 		switch (command) {
+			case "code": {
+				client.sendMessage(from, {})
+				break
+			}
 			case "ping": {
 				const sec = Math.floor(process.uptime())
 
@@ -149,7 +153,7 @@ const start = async() => {
 			}
 			case "restart": {
 				if (!isOwner) return
-				await client.sendMessage(from, { video: { url: "./gif.mp4" }, gifPlayback: true, caption: `Verificando actualizaciones en la rama "master" para continuar con el reinicio...`})
+				await client.sendMessage(from, { video: { url: "./gif.mp4" }, gifPlayback: true, caption: `Verificando actualizaciones en la rama "master" para continuar con el reinicio...`}, { quoted: ulink })
 				exec("git pull", async (error, stdout) => {
 					if (error) return await client.sendMessage(from, { text: "Error al buscar rama." })
 					await client.sendMessage(from, { text: (stdout.includes("Already up to date") ? "No hay cambios en la rama 'master'." : "Rama 'master' actualizada:\n" + stdout.trim()) })
