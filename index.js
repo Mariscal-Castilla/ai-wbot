@@ -142,7 +142,7 @@ const start = async() => {
 		/** TODO */
 		switch (command) {
 			case "code": {
-				client.sendMessage(from, {})
+				client.sendMessage(from, { text: "extrayendo codigo..."})
 				break
 			}
 			case "ping": {
