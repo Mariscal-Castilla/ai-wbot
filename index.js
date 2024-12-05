@@ -149,14 +149,14 @@ const start = async() => {
 			}
 			case "restart": {
 				if (!isOwner) return
-				await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: "Verificando Rama Master..." })
+				await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: `Verificando actualizaciones en la rama "master" para continuar con el reinicio...` })
 				exec("git pull", async (error, stdout, stderr) => {
 					if (error) return await client.sendMessage(from, { text: "Error al buscar rama."})
-					await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: `Rama "master" actualizada.` })
+					await client.sendMessage(from, { text: `Rama "master" actualizada.` })
 				})
 				exec("pm2 restart index", async (error, stdout, stderr) => {
 					if (error) return await client.sendMessage(from, { text: "Error al reiniciar."})
-					await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: "Reinicio exitoso." })
+					await client.sendMessage(from, { text: "Reinicio exitoso." })
 				})
 				break
 			}
