@@ -156,8 +156,8 @@ const start = async() => {
 				})
 				exec("pm2 restart index", async (error, stdout, stderr) => {
 					if (error) return await client.sendMessage(from, { text: "Error al reiniciar."})
-					await client.sendMessage(from, { text: "Reinicio exitoso." })
 				})
+				await client.sendMessage(from, { text: "Reinicio exitoso." })
 				break
 			}
 			case "tag": {
