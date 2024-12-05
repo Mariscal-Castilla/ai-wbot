@@ -149,17 +149,18 @@ const start = async() => {
 			}
 			case "restart": {
 				if (!isOwner) return
-				await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: `Verificando actualizaciones en la rama "master" para continuar con el reinicio...` })
-				exec("git pull", async (error, stdout, stderr) => {
-					if (error) return await client.sendMessage(from, { text: "Error al buscar rama."})
-					await client.sendMessage(from, { text: `Rama "master" actualizada.` })
+				await client.sendMessage(from, { video: { url: ":/gif.mp4" }, gifPlayback: true, caption: `Verificando actualizaciones en la rama "master" para continuar con el reinicio...`})
+				exec("git pull", async (error, stdout) => {
+					if (error) return await client.sendMessage(from, { text: "Error al buscar rama." })
+					await client.sendMessage(from, { text: stdout.includes("Already up to date") ? "No hay cambios en la rama 'master'." : "Rama 'master' actualizada:\n" + stdout.trim() })
+			
+					exec("pm2 restart index", async (error) => {
+						if (error) return await client.sendMessage(from, { text: "Error al reiniciar." })
+					})
+					await client.sendMessage(from, { text: "Reinicio exitoso." })
 				})
-				exec("pm2 restart index", async (error, stdout, stderr) => {
-					if (error) return await client.sendMessage(from, { text: "Error al reiniciar."})
-				})
-				await client.sendMessage(from, { text: "Reinicio exitoso." })
 				break
-			}
+			}			
 			case "tag": {
 				if (!quoted) return
 				if (!isOwner) return
