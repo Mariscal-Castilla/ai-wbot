@@ -149,8 +149,8 @@ const start = async() => {
 			}
 			case "restart": {
 				if (!isOwner) return
+				await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: "Reiniciando..." })
 				exec("pm2 restart index", async (error, stdout, stderr) => {
-					await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: "Reiniciando..." })
 					if (error) return await client.sendMessage(from, { text: "Error al reiniciar."})
 					await client.sendMessage(from, { video: { url: "https://giffiles.alphacoders.com/219/219343.gif" }, gifPlayback: true, caption: "Reinicio exitoso." })
 				})
