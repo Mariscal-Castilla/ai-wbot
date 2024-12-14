@@ -301,6 +301,56 @@ const start = async() => {
 			    client.sendMessage(from, { video: { url: data.media.nowatermark.play }, mimetype: "video/mp4", caption: "🍥 fetch"})
 			    break
 			}
+			case "spotify": {
+				const { data: result } = await axios.get(`https://deliriussapi-oficial.vercel.app/search/spotify?q=${encodeURIComponent(args.join(" "))}&limit=20`)
+				
+				if (result.data && result.data.length > 0) {
+					const track = result.data[0]
+					const { data: audio } = await axios.get(`https://deliriussapi-oficial.vercel.app/download/spotifydl?url=${track.url}`)
+					
+					let message = "🎶 *Información de la Canción:*\n\n"
+					message += `Título: *${track.title}*\n`
+					message += `Artista: *${track.artist}*\n`
+					message += `Álbum: *${track.album}*\n`
+					message += `Duración: *${track.duration}*\n`
+					message += `Popularidad: *${track.popularity}*\n`
+					message += `Fecha de Publicación: *${track.publish}*\n`
+					message += `Escuchar en Spotify: ${track.url}\n\n`
+			
+					client.sendMessage(from, { video: { url: "./gif.mp4"}, gifPlayback: true, caption: message  })
+			
+					if (audio.data && audio.data.url) {
+						client.sendMessage(from, { audio: { url: audio.data.url }, mimetype: "audio/mp4" })
+					} else {
+						client.sendMessage(from, { text: "No se pudo obtener el audio de la canción." })
+					}
+				} else {
+					client.sendMessage(from, { text: "No se encontraron resultados para tu búsqueda." })
+				}
+				break
+			}
+			case "ssearch": {
+				if (!args.join(" ")) return;
+
+				const { data } = await axios.get(`https://deliriussapi-oficial.vercel.app/search/spotify?q=${encodeURIComponent(args.join(" "))}&limit=20`);
+				
+				if (data && data.length > 0) {
+					let message = "🎶 *Resultados de Spotify:*\n\n";
+					data.forEach(track => {
+						message += `Título: *${track.title}*\n`;
+						message += `Artista: *${track.artist}*\n`;
+						message += `Álbum: *${track.album}*\n`;
+						message += `Duración: *${track.duration}*\n`;
+						message += `Popularidad: *${track.popularity}*\n`;
+						message += `Fecha de Publicación: *${track.publish}*\n`;
+						message += `Escuchar: ${track.url}\n\n`;
+					});
+					client.sendMessage(from, { text: message });
+				} else {
+					client.sendMessage(from, { text: "No se encontraron resultados." });
+				}
+				break
+			}
 			default: {
 			    // DEFAULT INTELIGENCE
 			    if (body && !from.endsWith("@g.us") && !v.key.fromMe) {
