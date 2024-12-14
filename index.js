@@ -334,8 +334,8 @@ const start = async() => {
 
 				const { data } = await axios.get(`https://deliriussapi-oficial.vercel.app/search/spotify?q=${encodeURIComponent(args.join(" "))}&limit=20`);
 				
-				if (data && data.length > 0) {
-					let message = "🎶 *Resultados de Spotify:*\n\n";
+				if (data && data.data.length > 0) {
+					let message = "🎶 *Resultados de Spotify:*\n\n"
 					data.data.forEach(track => {
 						message += `Título: *${track.title}*\n`
 						message += `Artista: *${track.artist}*\n`
