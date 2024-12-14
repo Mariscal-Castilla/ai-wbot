@@ -317,7 +317,7 @@ const start = async() => {
 					message += `Fecha de Publicación: *${track.publish}*\n`
 					message += `Escuchar en Spotify: ${track.url}\n\n`
 			
-					client.sendMessage(from, { video: { url: "./gif.mp4"}, gifPlayback: true, caption: message  })
+					client.sendMessage(from, { image: { url: track.image }, gifPlayback: true, caption: message  })
 			
 					if (audio.data && audio.data.url) {
 						client.sendMessage(from, { audio: { url: audio.data.url }, mimetype: "audio/mp4" })
@@ -330,24 +330,24 @@ const start = async() => {
 				break
 			}
 			case "ssearch": {
-				if (!args.join(" ")) return;
+				if (!args.join(" ")) return
 
 				const { data } = await axios.get(`https://deliriussapi-oficial.vercel.app/search/spotify?q=${encodeURIComponent(args.join(" "))}&limit=20`);
 				
 				if (data && data.length > 0) {
 					let message = "🎶 *Resultados de Spotify:*\n\n";
-					data.forEach(track => {
-						message += `Título: *${track.title}*\n`;
-						message += `Artista: *${track.artist}*\n`;
-						message += `Álbum: *${track.album}*\n`;
-						message += `Duración: *${track.duration}*\n`;
-						message += `Popularidad: *${track.popularity}*\n`;
-						message += `Fecha de Publicación: *${track.publish}*\n`;
-						message += `Escuchar: ${track.url}\n\n`;
+					data.data.forEach(track => {
+						message += `Título: *${track.title}*\n`
+						message += `Artista: *${track.artist}*\n`
+						message += `Álbum: *${track.album}*\n`
+						message += `Duración: *${track.duration}*\n`
+						message += `Popularidad: *${track.popularity}*\n`
+						message += `Fecha de Publicación: *${track.publish}*\n`
+						message += `Escuchar: ${track.url}\n\n`
 					});
-					client.sendMessage(from, { text: message });
+					client.sendMessage(from, { text: message })
 				} else {
-					client.sendMessage(from, { text: "No se encontraron resultados." });
+					client.sendMessage(from, { text: "No se encontraron resultados." })
 				}
 				break
 			}
